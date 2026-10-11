@@ -10,6 +10,12 @@ extends CharacterBody2D
 # A RayCast2D placed in front of the enemy's feet, pointing down.
 @onready var ledge_check = get_node_or_null("LedgeCheck")
 
+func _ready() -> void:
+	# Remove the enemy when its HurtBox runs out of hearths.
+	var hurt_box = get_node_or_null("HurtBox")
+	if hurt_box:
+		hurt_box.Died.connect(queue_free)
+
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():

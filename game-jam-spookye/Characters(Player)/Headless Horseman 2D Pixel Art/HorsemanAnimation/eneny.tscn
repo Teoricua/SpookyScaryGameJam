@@ -3,14 +3,19 @@
 [ext_resource type="Script" uid="uid://bt8ek6t7qx0yk" path="res://enemy.gd" id="1_xp8ju"]
 [ext_resource type="Texture2D" uid="uid://dufde154ijmxk" path="res://icon.svg" id="2_g8c3f"]
 [ext_resource type="PackedScene" uid="uid://45qua0ngmp3e" path="res://Characters(Player)/Headless Horseman 2D Pixel Art/HorsemanAnimation/hurt_box.tscn" id="3_3cvn6"]
+[ext_resource type="PackedScene" uid="uid://lwa3autwmn8i" path="res://Characters(Player)/Headless Horseman 2D Pixel Art/HorsemanAnimation/hitbox.tscn" id="4_gis51"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ulm7s"]
 size = Vector2(54, 56)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_eu64u"]
-size = Vector2(54, 56)
+size = Vector2(45, 49)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a8ku5"]
+size = Vector2(54, 55)
 
 [node name="ENEMY" type="CharacterBody2D" unique_id=1743162631]
+collision_layer = 4
 script = ExtResource("1_xp8ju")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1985072203]
@@ -26,6 +31,14 @@ debug_color = Color(0.14233151, 0.50889444, 0.81349283, 0.41960785)
 [node name="HurtBox" parent="." unique_id=1968984880 instance=ExtResource("3_3cvn6")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" unique_id=968951441]
-position = Vector2(3, 1)
+position = Vector2(2.5, 0.5)
 shape = SubResource("RectangleShape2D_eu64u")
 debug_color = Color(0, 0.6, 0, 0.41960785)
+
+[node name="hitbox" parent="." unique_id=1057801416 instance=ExtResource("4_gis51")]
+always_active = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox" unique_id=337820810]
+visible = false
+position = Vector2(3, 1.5)
+shape = SubResource("RectangleShape2D_a8ku5")
