@@ -14,6 +14,8 @@ const HURT_ANIMATION = &"HurtHorseman"
 @onready var animated_sprite = $AnimatedSprite2D
 
 var is_attacking := false
+var is_hurt := false
+var is_dead := false
 
 func _ready() -> void:
 	# The attack has to end on its own so the run/idle animation can come back.
@@ -24,6 +26,16 @@ func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
+
+	# A dead player only keeps falling; no input gets through.
+	if is_dead:
+		velocity.x = 0
+		move_and_slide()
+		return
+
+	# TEST ONLY: remove once something in the game deals damage.
+	if Input.is_action_just_pressed("debugdmg"):
+		$HurtBox.get_DMG(1)
 
 	# Handle jump.
 	if Input.is_action_just_pressed("MoveJump") and is_on_floor():
@@ -37,12 +49,12 @@ func _physics_process(delta: float) -> void:
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 
-	if Input.is_action_pressed("Attack") and not is_attacking:
+	if Input.is_action_pressed("Attack") and not is_attacking and not is_hurt:
 		is_attacking = true
 		animated_sprite.play(ATTACK_ANIMATION)
 
-	# Run/idle only take over the sprite once the attack has played through.
-	if not is_attacking:
+	# Run/idle only take over the sprite once the attack or hurt has played through.
+	if not is_attacking and not is_hurt:
 		animated_sprite.play(RUN_ANIMATION if direction else IDLE_ANIMATION)
 
 	move_and_slide()
@@ -50,10 +62,14 @@ func _physics_process(delta: float) -> void:
 func _on_animation_finished() -> void:
 	if animated_sprite.animation == ATTACK_ANIMATION:
 		is_attacking = false
+	elif animated_sprite.animation == HURT_ANIMATION:
+		is_hurt = false
+	elif animated_sprite.animation == DEATH_ANIMATION:
+		queue_free()
 
 
 func _on_hurt_box_died() -> void:
-	pass # Replace with function body.
+	is_dead = true
 	animated_sprite.play(DEATH_ANIMATION)
 
 func _on_hurt_box_healed() -> void:
@@ -61,5 +77,7 @@ func _on_hurt_box_healed() -> void:
 
 
 func _on_hurt_box_hurted() -> void:
-	pass # Replace with function body.
+	# Getting hit cuts the current attack short.
+	is_attacking = false
+	is_hurt = true
 	animated_sprite.play(HURT_ANIMATION)
