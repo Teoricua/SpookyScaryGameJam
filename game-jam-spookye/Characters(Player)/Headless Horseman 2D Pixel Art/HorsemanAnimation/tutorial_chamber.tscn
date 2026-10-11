@@ -311,7 +311,6 @@ tile_set = SubResource("TileSet_a8ku5")
 
 [node name="Player" parent="." unique_id=1367905254 instance=ExtResource("1_vdma1")]
 position = Vector2(343, 529)
-collision_layer = 1
 
 [node name="ENEMY" parent="." unique_id=1743162631 instance=ExtResource("3_vhnsk")]
 position = Vector2(576, 536)
