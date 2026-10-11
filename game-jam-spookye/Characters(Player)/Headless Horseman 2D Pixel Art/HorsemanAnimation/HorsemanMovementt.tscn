@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://cuj07fg4yngm2" path="res://Characters(Player)/Headless Horseman 2D Pixel Art/Sprites/HURT.png" id="3_jdlj2"]
 [ext_resource type="Texture2D" uid="uid://btbs3donk7lsu" path="res://Characters(Player)/Headless Horseman 2D Pixel Art/Sprites/IDLE.png" id="4_smmrc"]
 [ext_resource type="Texture2D" uid="uid://d1ga1gruutw4a" path="res://Characters(Player)/Headless Horseman 2D Pixel Art/Sprites/RUN.png" id="5_mmpch"]
+[ext_resource type="PackedScene" uid="uid://45qua0ngmp3e" path="res://Characters(Player)/Headless Horseman 2D Pixel Art/HorsemanAnimation/hurt_box.tscn" id="7_jdlj2"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cytbq"]
 atlas = ExtResource("1_o1w51")
@@ -91,21 +92,21 @@ region = Rect2(150, 0, 150, 140)
 atlas = ExtResource("3_jdlj2")
 region = Rect2(300, 0, 150, 140)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_jdlj2"]
+atlas = ExtResource("4_smmrc")
+region = Rect2(0, 0, 150, 140)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_smmrc"]
+atlas = ExtResource("4_smmrc")
+region = Rect2(150, 0, 150, 140)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mmpch"]
+atlas = ExtResource("4_smmrc")
+region = Rect2(300, 0, 150, 140)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_lhq6f"]
 atlas = ExtResource("4_smmrc")
-region = Rect2(0, 25, 150, 125)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3qakx"]
-atlas = ExtResource("4_smmrc")
-region = Rect2(150, 25, 150, 125)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ughg3"]
-atlas = ExtResource("4_smmrc")
-region = Rect2(300, 25, 150, 125)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_sq5vo"]
-atlas = ExtResource("4_smmrc")
-region = Rect2(450, 25, 150, 125)
+region = Rect2(450, 0, 150, 140)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7qe4y"]
 atlas = ExtResource("5_mmpch")
@@ -205,16 +206,16 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_jdlj2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_smmrc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mmpch")
+}, {
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_lhq6f")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3qakx")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ughg3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_sq5vo")
 }],
 "loop": 1,
 "name": &"IdleHorseman",
@@ -239,18 +240,30 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_a8ku5"]
-radius = 18.0
-height = 64.0
+radius = 14.0
+height = 62.0
 
 [node name="Player" type="CharacterBody2D" unique_id=1367905254]
 script = ExtResource("1_ty4km")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=106909549]
-position = Vector2(-6, -24)
+position = Vector2(-6, -27)
 sprite_frames = SubResource("SpriteFrames_a8ku5")
-animation = &"AttackHorseman"
+animation = &"IdleHorseman"
 autoplay = "IdleHorseman"
+frame_progress = 0.10718789
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1181405455]
+position = Vector2(0, 10)
+shape = SubResource("CapsuleShape2D_a8ku5")
+
+[node name="HurtBox" parent="." unique_id=1968984880 instance=ExtResource("7_jdlj2")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" unique_id=26555862]
 position = Vector2(0, -1)
 shape = SubResource("CapsuleShape2D_a8ku5")
+debug_color = Color(0, 0.6, 0, 0.41960785)
+
+[connection signal="Died" from="HurtBox" to="." method="_on_hurt_box_died"]
+[connection signal="Healed" from="HurtBox" to="." method="_on_hurt_box_healed"]
+[connection signal="Hurted" from="HurtBox" to="." method="_on_hurt_box_hurted"]
