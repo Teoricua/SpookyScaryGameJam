@@ -1,0 +1,70 @@
+[gd_scene format=3 uid="uid://duobj64dxima1"]
+
+[ext_resource type="Texture2D" uid="uid://7nlxdx0pmqu3" path="res://Custom Assets/Flooe far tile 2 last one?!.png" id="1_6axp4"]
+[ext_resource type="Texture2D" uid="uid://bcsbwdm6rrapc" path="res://Custom Assets/Castle Edge Revied.png" id="2_6axp4"]
+[ext_resource type="Texture2D" uid="uid://dtpuse2w3cuod" path="res://Custom Assets/OPACIITITIT.png" id="3_ykc37"]
+[ext_resource type="Texture2D" uid="uid://jx4x46xpw54e" path="res://Holloween ASssets/Parallax Background/Background/Background.png" id="4_ykc37"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_6axp4"]
+load_path = "res://.godot/imported/Flooe close tile 2.png-449dde765fa8cd960d629937fdc1d186.ctex"
+
+[node name="Parallax" type="Node2D" unique_id=1968396713]
+
+[node name="Floor Close" type="Parallax2D" parent="." unique_id=687270491]
+scroll_scale = Vector2(0.5, 1)
+scroll_offset = Vector2(960, 540)
+repeat_size = Vector2(1920, 0)
+repeat_times = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="Floor Close" unique_id=678090557]
+modulate = Color(0, 0, 0, 1)
+z_index = -97
+texture = SubResource("CompressedTexture2D_6axp4")
+
+[node name="Floor Far" type="Parallax2D" parent="." unique_id=1260640632]
+visible = false
+scroll_scale = Vector2(0.4, 1)
+scroll_offset = Vector2(960, 540)
+repeat_size = Vector2(1920, 0)
+repeat_times = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="Floor Far" unique_id=641147822]
+modulate = Color(0, 0, 0, 1)
+z_index = -98
+texture = ExtResource("1_6axp4")
+offset = Vector2(0, 100)
+
+[node name="Ponce" type="Parallax2D" parent="." unique_id=815184944]
+scroll_scale = Vector2(0.3, 1)
+scroll_offset = Vector2(960, 540)
+repeat_size = Vector2(1920, 0)
+repeat_times = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="Ponce" unique_id=58265214]
+modulate = Color(0.11, 0.11, 0.11, 1)
+z_index = -98
+texture = ExtResource("2_6axp4")
+
+[node name="Ponce2" type="Parallax2D" parent="." unique_id=65407457]
+scroll_scale = Vector2(0.3, 1)
+scroll_offset = Vector2(960, 540)
+repeat_size = Vector2(1920, 0)
+repeat_times = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="Ponce2" unique_id=485938496]
+modulate = Color(0.12, 0.12, 0.12, 1)
+z_index = -98
+texture = ExtResource("3_ykc37")
+
+[node name="Sky" type="Parallax2D" parent="." unique_id=485284523]
+scroll_scale = Vector2(0.2, 1)
+scroll_offset = Vector2(960, 540)
+repeat_size = Vector2(1920, 0)
+repeat_times = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="Sky" unique_id=1196558385]
+modulate = Color(0.49, 0.49, 0.49, 1)
+z_index = -100
+position = Vector2(2.0000305, 37.00006)
+scale = Vector2(6, 6)
+texture = ExtResource("4_ykc37")
