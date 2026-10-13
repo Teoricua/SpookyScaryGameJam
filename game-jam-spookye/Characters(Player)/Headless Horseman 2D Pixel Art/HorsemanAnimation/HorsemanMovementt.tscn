@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://btbs3donk7lsu" path="res://Characters(Player)/Headless Horseman 2D Pixel Art/Sprites/IDLE.png" id="4_smmrc"]
 [ext_resource type="Texture2D" uid="uid://d1ga1gruutw4a" path="res://Characters(Player)/Headless Horseman 2D Pixel Art/Sprites/RUN.png" id="5_mmpch"]
 [ext_resource type="PackedScene" uid="uid://45qua0ngmp3e" path="res://Characters(Player)/Headless Horseman 2D Pixel Art/HorsemanAnimation/hurt_box.tscn" id="7_jdlj2"]
+[ext_resource type="PackedScene" uid="uid://lwa3autwmn8i" path="res://Characters(Player)/Headless Horseman 2D Pixel Art/HorsemanAnimation/hitbox.tscn" id="7_smmrc"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cytbq"]
 atlas = ExtResource("1_o1w51")
@@ -240,28 +241,42 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_a8ku5"]
-radius = 14.0
+radius = 5.0
 height = 62.0
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a8ku5"]
+size = Vector2(56, 97)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jdlj2"]
+radius = 11.0
+height = 60.0
+
 [node name="Player" type="CharacterBody2D" unique_id=1367905254]
+collision_layer = 2
 script = ExtResource("1_ty4km")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=106909549]
 position = Vector2(-6, -27)
 sprite_frames = SubResource("SpriteFrames_a8ku5")
-animation = &"IdleHorseman"
+animation = &"AttackHorseman"
 autoplay = "IdleHorseman"
-frame_progress = 0.10718789
+frame_progress = 0.878699
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1181405455]
 position = Vector2(0, 10)
 shape = SubResource("CapsuleShape2D_a8ku5")
 
+[node name="hitbox" parent="." unique_id=1057801416 instance=ExtResource("7_smmrc")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox" unique_id=106245417]
+position = Vector2(-44, -2.5)
+shape = SubResource("RectangleShape2D_a8ku5")
+debug_color = Color(1, 0, 0, 0.41960785)
+
 [node name="HurtBox" parent="." unique_id=1968984880 instance=ExtResource("7_jdlj2")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" unique_id=26555862]
-position = Vector2(0, -1)
-shape = SubResource("CapsuleShape2D_a8ku5")
+shape = SubResource("CapsuleShape2D_jdlj2")
 debug_color = Color(0, 0.6, 0, 0.41960785)
 
 [connection signal="Died" from="HurtBox" to="." method="_on_hurt_box_died"]
